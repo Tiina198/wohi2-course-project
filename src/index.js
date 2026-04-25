@@ -1,18 +1,23 @@
 const express = require('express');
 const app = express();
 const questionsRouter = require("./routes/questions");
+const authRouter = require("./routes/auth");
 const prisma = require("./lib/prisma");
 
 
 const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON bodies
 app.use(express.json());
+
+// Routes
+app.use("/api/auth", authRouter);
 app.use("/api/questions", questionsRouter);
 
+// 404 handler
 app.use((req, res) => {
-  res.json({msg: "Not found"});
+  res.status(404).json({ msg: "Not found" });
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -20,6 +25,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal server error" });
 });
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -34,9 +40,3 @@ process.on("SIGTERM", async () => {
   await prisma.$disconnect();
   process.exit(0);
 });
-
-
-
-
-
-

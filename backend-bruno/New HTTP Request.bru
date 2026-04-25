@@ -4,6 +4,24 @@ meta {
   seq: 1
 }
 
-get {
-  url: 
+put {
+  url: http://localhost:3000/api/questions/:id
+  body: json
+  auth: bearer
+}
+
+params:path {
+  id: 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTc3NzEyMDUxMiwiZXhwIjoxNzc3MTI0MTEyfQ.tvCbYbIdhIQYucoxu8hW9feOqhELc42IsNZbkyAyHHI
+}
+
+body:json {
+  {
+    "question": "What is Sweden's largest city",
+    "answer": "Stockholm",
+    "keywords": ["what, city"]
+  }
 }
